@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
     // Get all users
@@ -29,24 +29,42 @@ module.exports = {
             return res.status(500).json(err);
     });
 },
+
+  // Update an user
+    updateUser(req, res) {
+    User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+    )
+    .then((user) =>
+        !user
+            ? res.status(404).json({ message: 'No user with this id!' })
+            : res.json(course)
+    )
+    .catch((err) => res.status(500).json(err));
+    },
+
+
+
   // Delete a user
     deleteUser(req, res) {
-        User.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: req.params.userId })
         .then((user) =>
             !user
-            ? res.status(404).json({ message: 'No user with that ID' })
-            : Thought.deleteMany({ username: user.username })
+                ? res.status(404).json({ message: 'No user with that ID' })
+                : Thought.deleteMany({ username: user.username })
         )
         .then(() => res.json({ message: 'User and thoughts deleted!' }))
         .catch((err) => res.status(500).json(err));
-    },
+},
 //TODO /api/users
-    //TODO get all users - getUsers
-    //TODO get a single user by _id and populated thought and friend data - getUserById
-    //TODO post a new user - createUser
-    //TODO put to update user by its _id
-    //TODO delete to remove user by its _id - deleteUser
-    //TODO Bonus - remove a user's associated thoughts when deleted
+    // get all users - getUsers
+    // get a single user by _id and populated thought and friend data - getUserById
+    // post a new user - createUser
+    // put to update user by its _id - updateUser
+    // delete to remove user by its _id - deleteUser
+    // Bonus - remove a user's associated thoughts when deleted
 
 //TODO /api/users/:userId/friends/:friendId
     //TODO post to add a new friend to a user's friend list
