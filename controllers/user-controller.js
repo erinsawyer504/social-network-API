@@ -67,8 +67,8 @@ module.exports = {
     // Bonus - remove a user's associated thoughts when deleted
 
 //TODO /api/users/:userId/friends/:friendId
-    //TODO post to add a new friend to a user's friend list
-    //TODO delete to remove a friend from a user's friend list
+    //TODO post to add a new friend to a user's friend list - addFriend
+    //TODO delete to remove a friend from a user's friend list - deleteFriend
 
 
 
