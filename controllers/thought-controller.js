@@ -12,7 +12,7 @@ const { Thought, User } = require('../models');
     //TODO post to create a reaction stored in a single thoughts reaction array field  addReaction
     //TODO DELETE to pull and remove a reaction by the raction's reaction Id value  deleteReaction
 
-module.exports = {
+module.exports= {
     // Get all Thoughts
     getThoughts(req, res) {
         Thought.find()

@@ -73,6 +73,3 @@ module.exports = {
 
 
 };
-
-// Exporting controller 
-module.exports = userController; 
