@@ -7,7 +7,6 @@ router.use('/api', apiRoutes);
 
 // Define a fallback route for any routes that don't match the ones above
 router.use((req, res) => {
-    // Send a 404 status code and an error message to the client
     res.status(404).send('Error!');
 });
 
