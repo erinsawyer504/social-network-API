@@ -58,18 +58,50 @@ module.exports = {
         .then(() => res.json({ message: 'User and thoughts deleted!' }))
         .catch((err) => res.status(500).json(err));
 },
-//TODO /api/users
-    // get all users - getUsers
-    // get a single user by _id and populated thought and friend data - getUserById
-    // post a new user - createUser
-    // put to update user by its _id - updateUser
-    // delete to remove user by its _id - deleteUser
-    // Bonus - remove a user's associated thoughts when deleted
 
-//TODO /api/users/:userId/friends/:friendId
-    //TODO post to add a new friend to a user's friend list - addFriend
-    //TODO delete to remove a friend from a user's friend list - deleteFriend
+    // Add friend to friend's list 
+    addFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $push: { friends: params.friendId }},
+            { new: true, runValidators: true }
+        )
+        .populate({
+            path: 'friends',
+            select: ('-__v')
+        })
+        .select('-__v')
+        .then(user => {
+            if (!user) {
+                res.status(404).json({ message: 'No User found with that id.' });
+                return;
+            }
+            res.json(user);
+            })
+            .catch(err => res.json(err));
+        
+    },
 
-
+    // Delete friend from friend's list 
+    deleteFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId }, 
+            { $pull: { friends: params.friendId }},
+            { new: true }
+        )
+        .populate({
+            path: 'friends', 
+            select: '-__v'
+        })
+        .select('-__v')
+        .then(user => {
+            if(!user) {
+                res.status(404).json({ message: 'No User found with that id.'});
+                return;
+            }
+            res.json(user);
+        })
+        .catch(err => res.status(400).json(err));
+    }
 
 };

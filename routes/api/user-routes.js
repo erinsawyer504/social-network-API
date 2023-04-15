@@ -19,12 +19,15 @@ router
 
 // route:  /api/users/:userid
 router
-    .route('/:userid')
+    .route('/:userId')
     .get(getUserById)
     .put(updateUser)
     .delete(deleteUser);
 
-//TODO route: /api/users/:userId/friends/:friendId
-
+//route: /api/users/:userId/friends/:friendId
+router
+    .route('/:userId/friends/:friendId')
+    .put(addFriend)
+    .delete(deleteFriend);
 
 module.exports = router; 
