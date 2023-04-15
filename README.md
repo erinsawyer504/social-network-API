@@ -20,7 +20,7 @@ Clone the repo into your vs code.  This application also requires node.js, expre
 
 ## Usage
 Here is a screenshot of the app!
-![Screenshot of blog](./public/assets/.PNG)
+![Screenshot of blog](./assets/social-media.PNG)
 
 ## License
 This repository is not covered under any license.
