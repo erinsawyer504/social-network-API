@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
 
+const activity = 'social network API';
 
 db.once('open', () => {
     app.listen(PORT, () => {

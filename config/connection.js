@@ -1,11 +1,10 @@
-const { connect, connection } = require('mongoose');
-
+const mongoose = require('mongoose');
+const { connect, connection } = mongoose;
 
 const connectionString =
     process.env.MONGODB_URI || 'mongodb://localhost/social-network-api';
 
 connect(connectionString, {
-    useFindAndModify: false,
     useNewUrlParser: true,  
     useUnifiedTopology: true,
 });
