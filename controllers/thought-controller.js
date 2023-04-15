@@ -11,6 +11,10 @@ module.exports= {
     // Get a single Thought by id
     getThoughtById(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
+        .populate({
+            path: 'reactions',
+            select: '-__v'
+        })
         .select('-__v')
         .then((thought) =>
         !thought
@@ -30,13 +34,11 @@ module.exports= {
                     { new: true, runValidators: true }
                 );
             })
-            .then(thought => {
-                if(!thought) {
-                    res.status(404).json({ message: 'No thought found with that id.'});
-                    return;
-                }
-                res.json(thought)
-            })
+            .then((thought) =>
+            !thought
+            ? res.status(404).json({ message: 'No thought with that ID' })
+            : res.json(thought)
+            )
             .catch(err => res.json(err)); 
     },
 
@@ -47,6 +49,10 @@ module.exports= {
             { $set: req.body },
             { runValidators: true, new: true }
         )
+        .populate({
+            path: 'reactions',
+            select: '-__v'
+        })
         .then((thought) =>
             !thought
                 ? res.status(404).json({ message: 'No thought with that id' })
@@ -90,14 +96,15 @@ module.exports= {
         { $push: { reactions: req.body } },
         { runValidators: true, new: true }
         )
-        .then((thought) => {
-            if (!thought) {
-            return res
-                .status(404)
-                .json({ message: 'No Thought found with that ID' });
-            }
-            return res.json(thought);
+        .populate({
+            path: 'reactions',
+            select: '-__v'
         })
+        .then((thought) =>
+        !thought
+        ? res.status(404).json({ message: 'No thought with that ID' })
+        : res.json(thought)
+        )
         .catch((err) => res.status(500).json(err));
     },
 
@@ -109,14 +116,11 @@ module.exports= {
         { $pull: { reaction: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true }
         )
-        .then((thought) => {
-            if (!thought) {
-            return res
-                .status(404)
-                .json({ message: 'No Thought found with that ID' });
-            }
-            return res.json(thought);
-        })
+        .then((thought) =>
+        !thought
+        ? res.status(404).json({ message: 'No thought with that ID' })
+        : res.json(thought)
+        )
         .catch((err) => res.status(500).json(err));
     },
     };
