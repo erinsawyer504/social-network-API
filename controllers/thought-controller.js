@@ -21,10 +21,23 @@ module.exports= {
 },
 
     // create a new Thought
-    createThought(req, res) {
-        Thought.create(req.body)
-        .then((Thought) => res.json(Thought))
-        .catch((err) => res.status(500).json(err));
+    createThought({ params, body}, res) {
+        Thought.create(body)
+            .then(({ _id }) => {
+                return User.findOneAndUpdate(
+                    { _id: params.userId },
+                    { $push: { thoughts: _id }},
+                    { new: true, runValidators: true }
+                );
+            })
+            .then(thought => {
+                if(!thought) {
+                    res.status(404).json({ message: 'No thought found with that id.'});
+                    return;
+                }
+                res.json(thought)
+            })
+            .catch(err => res.json(err)); 
     },
 
     //Update a Thought
