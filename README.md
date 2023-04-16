@@ -5,7 +5,7 @@ This project is the innerworkings of a social media platform.  It uses Express.j
 
 ## Links
 - [github repo](https://github.com/erinsawyer504/social-network-API)
-- [Link to Demo Video]()
+- [Link to Demo Video](https://drive.google.com/file/d/1f7T0zTP6o3oLJdnjOdLT7zGhh-S3K7Gy/view)
 
 ## Table of Contents
 - [Installation](#installation)  
